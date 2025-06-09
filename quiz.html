@@ -35,80 +35,136 @@
 
   <h1>Quiz: Qual é o seu Perfil Logístico?</h1>
 
-  <form id="quizForm">
-    <!-- Perguntas -->
-    <div class="pergunta">
-      <p>1. Diante da implantação de um novo sistema de gestão logística, o que você faz?</p>
-      <label><input type="radio" name="q1" value="A"> Analiso se o sistema atual ainda é eficaz antes de mudar.</label><br>
-      <label><input type="radio" name="q1" value="B"> Peço feedback da equipe operacional sobre quais melhorias são necessárias.</label><br>
-      <label><input type="radio" name="q1" value="C"> Pesquiso tendências do mercado e busco soluções inovadoras e escaláveis.</label>
-    </div>
-
-    <div class="pergunta">
-      <p>2. Seu cliente pede uma entrega mais rápida do que o previsto. Como reage?</p>
-      <label><input type="radio" name="q2" value="A"> Avalio os custos extras envolvidos e negociação com fornecedores.</label><br>
-      <label><input type="radio" name="q2" value="B"> Verifico a viabilidade com base nos recursos atuais e prazos já agendados.</label><br>
-      <label><input type="radio" name="q2" value="C"> Proponho novas rotas otimizadas com uso de IA ou drones, se possível.</label>
-    </div>
-
-    <div class="pergunta">
-      <p>3. Você precisa reduzir custos na cadeia logística:</p>
-      <label><input type="radio" name="q3" value="A"> Reduzimos o número de colaboradores temporários.</label><br>
-      <label><input type="radio" name="q3" value="B"> Fazemos análise detalhada dos processos para eliminar desperdícios.</label><br>
-      <label><input type="radio" name="q3" value="C"> Investimos em automação e sistemas preditivos para evitar custos futuros.</label>
-    </div>
-
-    <div class="pergunta">
-      <p>4. Sobre o uso de tecnologias como IoT e inteligência artificial na logística:</p>
-      <label><input type="radio" name="q4" value="A"> Preferimos manter os métodos tradicionais até ver resultados em empresas semelhantes.</label><br>
-      <label><input type="radio" name="q4" value="B"> Adotamos quando há clara melhoria no ROI e facilidade de implementação.</label><br>
-      <label><input type="radio" name="q4" value="C"> Somos pioneiros na adoção dessas tecnologias para ganhar vantagem competitiva.</label>
-    </div>
-
-    <div class="pergunta">
-      <p>5. Um fornecedor não entregou materiais essenciais no prazo. O que você faz?</p>
-      <label><input type="radio" name="q5" value="A"> Acionamos outro fornecedor com quem já temos histórico confiável.</label><br>
-      <label><input type="radio" name="q5" value="B"> Reavaliamos nossa estratégia de sourcing para diversificar fornecedores.</label><br>
-      <label><input type="radio" name="q5" value="C"> Utilizamos impressão 3D ou estoque virtual para suprir a demanda imediatamente.</label>
-    </div>
-
-    <div class="pergunta">
-      <p>6. Ao planejar uma nova operação logística, qual sua prioridade?</p>
-      <label><input type="radio" name="q6" value="A"> Garantir estabilidade e segurança com processos bem testados.</label><br>
-      <label><input type="radio" name="q6" value="B"> Equilibrar custo-benefício e eficiência operacional.</label><br>
-      <label><input type="radio" name="q6" value="C"> Inovar com novas metodologias e integração digital desde o início.</label>
-    </div>
-
-    <button type="button" onclick="verPerfil()">Ver Meu Perfil</button>
-  </form>
+  <form id="quizForm"></form>
 
   <div class="resultado" id="resultado"></div>
 
   <script>
-    function verPerfil() {
-      const respostas = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'];
-      let contagem = { A: 0, B: 0, C: 0 };
+    // Perguntas e alternativas
+    const perguntas = [
+      {
+        texto: "Diante da implantação de um novo sistema de gestão logística, o que você faz?",
+        opcoes: [
+          { valor: "A", texto: "Analiso se o sistema atual ainda é eficaz antes de mudar." },
+          { valor: "B", texto: "Peço feedback da equipe operacional sobre quais melhorias são necessárias." },
+          { valor: "C", texto: "Pesquiso tendências do mercado e busco soluções inovadoras e escaláveis." }
+        ]
+      },
+      {
+        texto: "Seu cliente pede uma entrega mais rápida do que o previsto. Como reage?",
+        opcoes: [
+          { valor: "A", texto: "Avalio os custos extras envolvidos e negociação com fornecedores." },
+          { valor: "B", texto: "Verifico a viabilidade com base nos recursos atuais e prazos já agendados." },
+          { valor: "C", texto: "Proponho novas rotas otimizadas com uso de IA ou drones, se possível." }
+        ]
+      },
+      {
+        texto: "Você precisa reduzir custos na cadeia logística:",
+        opcoes: [
+          { valor: "A", texto: "Reduzimos o número de colaboradores temporários." },
+          { valor: "B", texto: "Fazemos análise detalhada dos processos para eliminar desperdícios." },
+          { valor: "C", texto: "Investimos em automação e sistemas preditivos para evitar custos futuros." }
+        ]
+      },
+      {
+        texto: "Sobre o uso de tecnologias como IoT e inteligência artificial na logística:",
+        opcoes: [
+          { valor: "A", texto: "Preferimos manter os métodos tradicionais até ver resultados em empresas semelhantes." },
+          { valor: "B", texto: "Adotamos quando há clara melhoria no ROI e facilidade de implementação." },
+          { valor: "C", texto: "Somos pioneiros na adoção dessas tecnologias para ganhar vantagem competitiva." }
+        ]
+      },
+      {
+        texto: "Um fornecedor não entregou materiais essenciais no prazo. O que você faz?",
+        opcoes: [
+          { valor: "A", texto: "Acionamos outro fornecedor com quem já temos histórico confiável." },
+          { valor: "B", texto: "Reavaliamos nossa estratégia de sourcing para diversificar fornecedores." },
+          { valor: "C", texto: "Utilizamos impressão 3D ou estoque virtual para suprir a demanda imediatamente." }
+        ]
+      },
+      {
+        texto: "Ao planejar uma nova operação logística, qual sua prioridade?",
+        opcoes: [
+          { valor: "A", texto: "Garantir estabilidade e segurança com processos bem testados." },
+          { valor: "B", texto: "Equilibrar custo-benefício e eficiência operacional." },
+          { valor: "C", texto: "Inovar com novas metodologias e integração digital desde o início." }
+        ]
+      }
+    ];
 
-      for (let q of respostas) {
-        const op = document.querySelector(`input[name="${q}"]:checked`);
+    // Função para embaralhar array (Fisher-Yates)
+    function embaralhar(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Renderiza perguntas embaralhadas
+    function renderizarPerguntas() {
+      embaralhar(perguntas);
+      const form = document.getElementById('quizForm');
+      form.innerHTML = '';
+      perguntas.forEach((pergunta, idx) => {
+        // Embaralha as opções também
+        embaralhar(pergunta.opcoes);
+        let html = `<div class="pergunta">
+          <p>${idx + 1}. ${pergunta.texto}</p>`;
+        pergunta.opcoes.forEach(op => {
+          html += `<label><input type="radio" name="q${idx}" value="${op.valor}"> ${op.texto}</label><br>`;
+        });
+        html += `</div>`;
+        form.innerHTML += html;
+      });
+      form.innerHTML += `<button type="button" onclick="verPerfil()">Ver Meu Perfil</button>`;
+    }
+
+    // Calcula e mostra o perfil em porcentagem
+    function verPerfil() {
+      let contagem = { A: 0, B: 0, C: 0 };
+      for (let i = 0; i < perguntas.length; i++) {
+        const op = document.querySelector(`input[name="q${i}"]:checked`);
         if (op) contagem[op.value]++;
         else {
           alert("Por favor, responda todas as perguntas.");
           return;
         }
       }
+      const total = perguntas.length;
+      const porcentagens = {
+        A: Math.round((contagem.A / total) * 100),
+        B: Math.round((contagem.B / total) * 100),
+        C: Math.round((contagem.C / total) * 100)
+      };
 
-      let perfil = '';
-      if (contagem.A > contagem.C && contagem.A > contagem.B) {
-        perfil = 'Perfil Conservador: valoriza estabilidade e baixo risco.';
+      // Determina o perfil principal
+      let perfil = "";
+      if (contagem.A > contagem.B && contagem.A > contagem.C) {
+        perfil = "Conservador";
       } else if (contagem.C > contagem.A && contagem.C > contagem.B) {
-        perfil = 'Perfil Futurístico: adota tecnologia e inovação como diferencial.';
+        perfil = "Futurístico";
       } else {
-        perfil = 'Perfil Equilibrado / Prático: busca equilíbrio entre inovação e operação.';
+        perfil = "Equilibrado / Prático";
       }
 
-      document.getElementById("resultado").innerHTML = `<p>${perfil}</p>`;
+      let resultado = `
+        <p><b>Seu perfil logístico é: ${perfil}</b></p>
+        <p><b>Conservador:</b> ${porcentagens.A}%<br>
+        <b>Equilibrado / Prático:</b> ${porcentagens.B}%<br>
+        <b>Futurístico:</b> ${porcentagens.C}%</p>
+        <hr>
+        <p>
+          <b>Conservador:</b> Valoriza estabilidade, experiência prévia e baixo risco.<br>
+          <b>Perfil Futurístico:</b> Enxerga oportunidades nas mudanças, adota tecnologia proativamente.<br>
+          <b>Perfil Equilibrado / Prático:</b> Busca equilíbrio entre inovação e realidade operacional.
+        </p>
+      `;
+
+      document.getElementById("resultado").innerHTML = resultado;
     }
+
+    // Inicializa quiz ao carregar
+    renderizarPerguntas();
   </script>
 
 </body>
