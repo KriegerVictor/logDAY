@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz de Perfil Logístico</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f9f9f9;
+    }
+    .pergunta {
+      margin-bottom: 25px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    h2 {
+      color: #333;
+    }
+    .resultado {
+      margin-top: 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Quiz: Qual é o seu Perfil Logístico?</h1>
+
+  <form id="quizForm">
+    <!-- Perguntas -->
+    <div class="pergunta">
+      <p>1. Diante da implantação de um novo sistema de gestão logística, o que você faz?</p>
+      <label><input type="radio" name="q1" value="A"> Analiso se o sistema atual ainda é eficaz antes de mudar.</label><br>
+      <label><input type="radio" name="q1" value="B"> Peço feedback da equipe operacional sobre quais melhorias são necessárias.</label><br>
+      <label><input type="radio" name="q1" value="C"> Pesquiso tendências do mercado e busco soluções inovadoras e escaláveis.</label>
+    </div>
+
+    <div class="pergunta">
+      <p>2. Seu cliente pede uma entrega mais rápida do que o previsto. Como reage?</p>
+      <label><input type="radio" name="q2" value="A"> Avalio os custos extras envolvidos e negociação com fornecedores.</label><br>
+      <label><input type="radio" name="q2" value="B"> Verifico a viabilidade com base nos recursos atuais e prazos já agendados.</label><br>
+      <label><input type="radio" name="q2" value="C"> Proponho novas rotas otimizadas com uso de IA ou drones, se possível.</label>
+    </div>
+
+    <div class="pergunta">
+      <p>3. Você precisa reduzir custos na cadeia logística:</p>
+      <label><input type="radio" name="q3" value="A"> Reduzimos o número de colaboradores temporários.</label><br>
+      <label><input type="radio" name="q3" value="B"> Fazemos análise detalhada dos processos para eliminar desperdícios.</label><br>
+      <label><input type="radio" name="q3" value="C"> Investimos em automação e sistemas preditivos para evitar custos futuros.</label>
+    </div>
+
+    <div class="pergunta">
+      <p>4. Sobre o uso de tecnologias como IoT e inteligência artificial na logística:</p>
+      <label><input type="radio" name="q4" value="A"> Preferimos manter os métodos tradicionais até ver resultados em empresas semelhantes.</label><br>
+      <label><input type="radio" name="q4" value="B"> Adotamos quando há clara melhoria no ROI e facilidade de implementação.</label><br>
+      <label><input type="radio" name="q4" value="C"> Somos pioneiros na adoção dessas tecnologias para ganhar vantagem competitiva.</label>
+    </div>
+
+    <div class="pergunta">
+      <p>5. Um fornecedor não entregou materiais essenciais no prazo. O que você faz?</p>
+      <label><input type="radio" name="q5" value="A"> Acionamos outro fornecedor com quem já temos histórico confiável.</label><br>
+      <label><input type="radio" name="q5" value="B"> Reavaliamos nossa estratégia de sourcing para diversificar fornecedores.</label><br>
+      <label><input type="radio" name="q5" value="C"> Utilizamos impressão 3D ou estoque virtual para suprir a demanda imediatamente.</label>
+    </div>
+
+    <div class="pergunta">
+      <p>6. Ao planejar uma nova operação logística, qual sua prioridade?</p>
+      <label><input type="radio" name="q6" value="A"> Garantir estabilidade e segurança com processos bem testados.</label><br>
+      <label><input type="radio" name="q6" value="B"> Equilibrar custo-benefício e eficiência operacional.</label><br>
+      <label><input type="radio" name="q6" value="C"> Inovar com novas metodologias e integração digital desde o início.</label>
+    </div>
+
+    <button type="button" onclick="verPerfil()">Ver Meu Perfil</button>
+  </form>
+
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    function verPerfil() {
+      const respostas = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'];
+      let contagem = { A: 0, B: 0, C: 0 };
+
+      for (let q of respostas) {
+        const op = document.querySelector(`input[name="${q}"]:checked`);
+        if (op) contagem[op.value]++;
+        else {
+          alert("Por favor, responda todas as perguntas.");
+          return;
+        }
+      }
+
+      let perfil = '';
+      if (contagem.A > contagem.C && contagem.A > contagem.B) {
+        perfil = 'Perfil Conservador: valoriza estabilidade e baixo risco.';
+      } else if (contagem.C > contagem.A && contagem.C > contagem.B) {
+        perfil = 'Perfil Futurístico: adota tecnologia e inovação como diferencial.';
+      } else {
+        perfil = 'Perfil Equilibrado / Prático: busca equilíbrio entre inovação e operação.';
+      }
+
+      document.getElementById("resultado").innerHTML = `<p>${perfil}</p>`;
+    }
+  </script>
+
+</body>
+</html>
