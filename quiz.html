@@ -61,7 +61,7 @@
       {
         texto: "Você precisa reduzir custos na cadeia logística:",
         opcoes: [
-          { valor: "A", texto: "Reduzimos o número de colaboradores temporários." },
+          { valor: "A", texto: "Revisamos contratos e buscamos alternativas para otimizar recursos" },
           { valor: "B", texto: "Fazemos análise detalhada dos processos para eliminar desperdícios." },
           { valor: "C", texto: "Investimos em automação e sistemas preditivos para evitar custos futuros." }
         ]
@@ -139,7 +139,21 @@
 
       // Determina o perfil principal
       let perfil = "";
-      if (contagem.A > contagem.B && contagem.A > contagem.C) {
+      if (contagem.A === contagem.B && contagem.B === contagem.C) {
+        perfil = "Um pouco de tudo";
+      } else if (
+        contagem.A === contagem.B && contagem.A > contagem.C
+      ) {
+        perfil = "Conservador e Equilibrado / Prático";
+      } else if (
+        contagem.A === contagem.C && contagem.A > contagem.B
+      ) {
+        perfil = "Conservador e Futurístico";
+      } else if (
+        contagem.B === contagem.C && contagem.B > contagem.A
+      ) {
+        perfil = "Equilibrado / Prático e Futurístico";
+      } else if (contagem.A > contagem.B && contagem.A > contagem.C) {
         perfil = "Conservador";
       } else if (contagem.C > contagem.A && contagem.C > contagem.B) {
         perfil = "Futurístico";
