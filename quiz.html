@@ -16,7 +16,7 @@
       border-radius: 10px;
       box-shadow: 0 0 10px #ccc;
     }
-    h2 {
+    h1 {
       color: #333;
     }
     .resultado {
@@ -29,157 +29,215 @@
       font-size: 16px;
       cursor: pointer;
     }
+    select {
+      margin-bottom: 20px;
+      padding: 5px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Quiz: Qual é o seu Perfil Logístico?</h1>
+  <h1 id="titulo">Quiz: Qual é o seu Perfil Logístico?</h1>
+
+  <label for="idioma">Escolha o idioma / Elige el idioma:</label>
+  <select id="idioma" onchange="renderizarPerguntas()">
+    <option value="pt">Português</option>
+    <option value="es">Español</option>
+  </select>
 
   <form id="quizForm"></form>
 
   <div class="resultado" id="resultado"></div>
 
   <script>
-    // Perguntas e alternativas
-    const perguntas = [
+    const perguntasPT = [
       {
-        texto: "Diante da implantação de um novo sistema de gestão logística, o que você faz?",
+        texto: "Você viaja de férias e sua reserva de hotel não foi confirmada. Qual sua atitude?",
         opcoes: [
-          { valor: "A", texto: "Analiso se o sistema atual ainda é eficaz antes de mudar." },
-          { valor: "B", texto: "Peço feedback da equipe operacional sobre quais melhorias são necessárias." },
-          { valor: "C", texto: "Pesquiso tendências do mercado e busco soluções inovadoras e escaláveis." }
+          { valor: "A", texto: "Procuro o gerente, apresento provas da reserva e resolvo com calma e organização." },
+          { valor: "B", texto: "Analiso as alternativas disponíveis nas redondezas, comparando tempo e custo." },
+          { valor: "C", texto: "Uso apps e assistentes virtuais para achar outra hospedagem melhor e otimizar o trajeto." },
+          { valor: "D", texto: "Ligo para um conhecido da cidade e resolvo informalmente onde ficar." }
         ]
       },
       {
-        texto: "Seu cliente pede uma entrega mais rápida do que o previsto. Como reage?",
+        texto: "Vai fazer um churrasco em casa para 15 pessoas. Como se organiza?",
         opcoes: [
-          { valor: "A", texto: "Avalio os custos extras envolvidos e negociação com fornecedores." },
-          { valor: "B", texto: "Verifico a viabilidade com base nos recursos atuais e prazos já agendados." },
-          { valor: "C", texto: "Proponho novas rotas otimizadas com uso de IA ou drones, se possível." }
+          { valor: "A", texto: "Faço uma lista com base em eventos passados e compro tudo com antecedência." },
+          { valor: "B", texto: "Divido as tarefas entre os amigos, otimizando custo, tempo e recursos." },
+          { valor: "C", texto: "Uso ferramentas digitais para calcular as quantidades e agendar entregas automatizadas." },
+          { valor: "D", texto: "Improviso no dia, compro o que for preciso conforme a galera for chegando." }
         ]
       },
       {
-        texto: "Você precisa reduzir custos na cadeia logística:",
+        texto: "Você vai se mudar de cidade em 1 mês. Como planeja a mudança?",
         opcoes: [
-          { valor: "A", texto: "Revisamos contratos e buscamos alternativas para otimizar recursos" },
-          { valor: "B", texto: "Fazemos análise detalhada dos processos para eliminar desperdícios." },
-          { valor: "C", texto: "Investimos em automação e sistemas preditivos para evitar custos futuros." }
+          { valor: "A", texto: "Organizo tudo com listas físicas e datas definidas para cada tarefa." },
+          { valor: "B", texto: "Identifico os itens críticos, contrato frete e crio um cronograma com folgas." },
+          { valor: "C", texto: "Uso plataformas de logística digital que fazem o rastreamento da mudança e gestão dos itens." },
+          { valor: "D", texto: "Aceito ajuda de familiares e faço aos poucos, conforme dá tempo e disposição." }
         ]
       },
       {
-        texto: "Sobre o uso de tecnologias como IoT e inteligência artificial na logística:",
+        texto: "Ao perceber que alimentos estão vencendo com frequência na sua casa, o que você decide fazer?",
         opcoes: [
-          { valor: "A", texto: "Preferimos manter os métodos tradicionais até ver resultados em empresas semelhantes." },
-          { valor: "B", texto: "Adotamos quando há clara melhoria no ROI e facilidade de implementação." },
-          { valor: "C", texto: "Somos pioneiros na adoção dessas tecnologias para ganhar vantagem competitiva." }
+          { valor: "A", texto: "Crio uma planilha manual com datas de validade e compro somente o que sei que usaremos." },
+          { valor: "B", texto: "Organizo os alimentos por categorias e os giro por ordem de consumo (FIFO) para evitar desperdício." },
+          { valor: "C", texto: "Uso apps que monitoram validade e me avisam sobre o que consumir ou comprar." },
+          { valor: "D", texto: "Pergunto para quem cozinha o que está faltando ou sobrando e decido conforme a conversa." }
         ]
       },
       {
-        texto: "Um fornecedor não entregou materiais essenciais no prazo. O que você faz?",
+        texto: "Ao gerenciar entregas urbanas, você se depara com atrasos recorrentes. O que faz?",
         opcoes: [
-          { valor: "A", texto: "Acionamos outro fornecedor com quem já temos histórico confiável." },
-          { valor: "B", texto: "Reavaliamos nossa estratégia de sourcing para diversificar fornecedores." },
-          { valor: "C", texto: "Utilizamos impressão 3D ou estoque virtual para suprir a demanda imediatamente." }
+          { valor: "A", texto: "Reviso manualmente as rotas e horários, tentando reduzir imprevistos." },
+          { valor: "B", texto: "Analiso os dados históricos e ajusto rotas com base na frequência e demanda." },
+          { valor: "C", texto: "Implanto um sistema de roteirização inteligente com previsão de tráfego via IA." },
+          { valor: "D", texto: "Ajusto a comunicação com os motoristas para entender os reais obstáculos na rua." }
         ]
       },
       {
-        texto: "Ao planejar uma nova operação logística, qual sua prioridade?",
+        texto: "Sua cadeia de suprimentos depende de fornecedores internacionais. Como você lida com imprevistos globais?",
         opcoes: [
-          { valor: "A", texto: "Garantir estabilidade e segurança com processos bem testados." },
-          { valor: "B", texto: "Equilibrar custo-benefício e eficiência operacional." },
-          { valor: "C", texto: "Inovar com novas metodologias e integração digital desde o início." }
+          { valor: "A", texto: "Mantenho um estoque de segurança e acompanho notícias para agir com antecedência." },
+          { valor: "B", texto: "Negocio contratos flexíveis e desenvolvo alternativas locais em paralelo." },
+          { valor: "C", texto: "Uso blockchain para rastreabilidade completa e IA para prever riscos e simular cenários." },
+          { valor: "D", texto: "Entro em contato direto com os fornecedores e confio no relacionamento construído." }
         ]
       }
     ];
 
-    // Função para embaralhar array (Fisher-Yates)
-    function embaralhar(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    const perguntasES = [
+      {
+        texto: "Estás de vacaciones y tu reserva de hotel no fue confirmada. ¿Qué haces?",
+        opcoes: [
+          { valor: "A", texto: "Busco al gerente, muestro comprobantes y trato de resolver con calma y organización." },
+          { valor: "B", texto: "Analizo las opciones disponibles comparando tiempo y costo." },
+          { valor: "C", texto: "Uso apps o asistentes virtuales para encontrar otra mejor opción y optimizar el trayecto." },
+          { valor: "D", texto: "Llamo a un conocido de la ciudad y soluciono informalmente dónde quedarme." }
+        ]
+      },
+      {
+        texto: "Organizas una parrillada en casa para 15 personas. ¿Cómo lo haces?",
+        opcoes: [
+          { valor: "A", texto: "Hago una lista con base en eventos anteriores y compro todo con anticipación." },
+          { valor: "B", texto: "Reparto tareas entre los amigos optimizando costos, tiempo y recursos." },
+          { valor: "C", texto: "Uso herramientas digitales para calcular cantidades y agendar entregas." },
+          { valor: "D", texto: "Improviso el día del evento y compro lo necesario según llegan los invitados." }
+        ]
+      },
+      {
+        texto: "Te mudas de ciudad en 1 mes. ¿Cómo lo planeas?",
+        opcoes: [
+          { valor: "A", texto: "Organizo todo con listas físicas y fechas definidas por tarea." },
+          { valor: "B", texto: "Identifico los elementos críticos, contrato el transporte y creo un cronograma con holgura." },
+          { valor: "C", texto: "Uso plataformas digitales que rastrean la mudanza e gestionan los ítems." },
+          { valor: "D", texto: "Acepto ayuda familiar y hago todo poco a poco conforme tenga tiempo." }
+        ]
+      },
+      {
+        texto: "Notas que en tu casa se vencen alimentos con frecuencia. ¿Qué decides hacer?",
+        opcoes: [
+          { valor: "A", texto: "Hago una hoja de cálculo con fechas de vencimiento y solo compro lo que se usará." },
+          { valor: "B", texto: "Organizo los alimentos por categorías y los giro por orden de consumo (FIFO) para evitar desperdicio." },
+          { valor: "C", texto: "Uso apps que monitorean la caducidad y me avisan sobre qué consumir o reponer." },
+          { valor: "D", texto: "Pregunto a quien cocina qué falta o sobra y decido en base a eso." }
+        ]
+      },
+      {
+        texto: "Al gestionar entregas urbanas enfrentas retrasos frecuentes. ¿Qué haces?",
+        opcoes: [
+          { valor: "A", texto: "Reviso manualmente las rutas y horarios para reducir imprevistos." },
+          { valor: "B", texto: "Analizo datos históricos y ajusto rutas según frecuencia e demanda." },
+          { valor: "C", texto: "Implemento un sistema inteligente de rutas com predicción de tráfico por IA." },
+          { valor: "D", texto: "Me comunico con los conductores para entender los obstáculos reales." }
+        ]
+      },
+      {
+        texto: "Tu cadena de suministro depende de proveedores internacionales. ¿Cómo manejas imprevistos globales?",
+        opcoes: [
+          { valor: "A", texto: "Mantengo stock de seguridad y sigo noticias para actuar con anticipación." },
+          { valor: "B", texto: "Negocio contratos flexibles y desarrollo proveedores locales en paralelo." },
+          { valor: "C", texto: "Uso blockchain para trazabilidade completa e IA para prever riscos e simular cenários." },
+          { valor: "D", texto: "Contacto directamente a los proveedores y confío en la relación construida." }
+        ]
       }
-    }
+    ];
 
-    // Renderiza perguntas embaralhadas
     function renderizarPerguntas() {
-      embaralhar(perguntas);
-      const form = document.getElementById('quizForm');
-      form.innerHTML = '';
+      const idioma = document.getElementById("idioma").value;
+      const perguntas = idioma === "es" ? perguntasES : perguntasPT;
+      document.getElementById("titulo").innerText = idioma === "es" ? "Quiz: ¿Cuál es tu perfil logístico?" : "Quiz: Qual é o seu Perfil Logístico?";
+
+      const form = document.getElementById("quizForm");
+      form.innerHTML = "";
       perguntas.forEach((pergunta, idx) => {
-        // Embaralha as opções também
-        embaralhar(pergunta.opcoes);
-        let html = `<div class="pergunta">
-          <p>${idx + 1}. ${pergunta.texto}</p>`;
+        let html = `<div class="pergunta"><p>${idx + 1}. ${pergunta.texto}</p>`;
         pergunta.opcoes.forEach(op => {
           html += `<label><input type="radio" name="q${idx}" value="${op.valor}"> ${op.texto}</label><br>`;
         });
         html += `</div>`;
         form.innerHTML += html;
       });
-      form.innerHTML += `<button type="button" onclick="verPerfil()">Ver Meu Perfil</button>`;
+      form.innerHTML += `<button type="button" onclick="verPerfil()">${idioma === 'es' ? 'Ver resultado' : 'Ver Resultado'}</button>`;
     }
 
-    // Calcula e mostra o perfil em porcentagem
     function verPerfil() {
-      let contagem = { A: 0, B: 0, C: 0 };
+      const idioma = document.getElementById("idioma").value;
+      const perguntas = idioma === "es" ? perguntasES : perguntasPT;
+      let contagem = { A: 0, B: 0, C: 0, D: 0 };
+
       for (let i = 0; i < perguntas.length; i++) {
         const op = document.querySelector(`input[name="q${i}"]:checked`);
         if (op) contagem[op.value]++;
         else {
-          alert("Por favor, responda todas as perguntas.");
+          alert(idioma === "es" ? "Por favor, responde todas las preguntas." : "Por favor, responda todas as perguntas.");
           return;
         }
       }
+
       const total = perguntas.length;
       const porcentagens = {
         A: Math.round((contagem.A / total) * 100),
         B: Math.round((contagem.B / total) * 100),
-        C: Math.round((contagem.C / total) * 100)
+        C: Math.round((contagem.C / total) * 100),
+        D: Math.round((contagem.D / total) * 100)
       };
 
-      // Determina o perfil principal
-      let perfil = "";
-      if (contagem.A === contagem.B && contagem.B === contagem.C) {
-        perfil = "Um pouco de tudo";
-      } else if (
-        contagem.A === contagem.B && contagem.A > contagem.C
-      ) {
-        perfil = "Conservador e Equilibrado / Prático";
-      } else if (
-        contagem.A === contagem.C && contagem.A > contagem.B
-      ) {
-        perfil = "Conservador e Futurístico";
-      } else if (
-        contagem.B === contagem.C && contagem.B > contagem.A
-      ) {
-        perfil = "Equilibrado / Prático e Futurístico";
-      } else if (contagem.A > contagem.B && contagem.A > contagem.C) {
-        perfil = "Conservador";
-      } else if (contagem.C > contagem.A && contagem.C > contagem.B) {
-        perfil = "Futurístico";
-      } else {
-        perfil = "Equilibrado / Prático";
-      }
+      const mapPerfis = {
+        A: idioma === "es" ? "Perfil Raíz" : "Perfil Raiz",
+        B: "Equilibrado / Prático",
+        C: "Futurístico",
+        D: idioma === "es" ? "Intuitivo / Relacional" : "Intuitivo / Relacional"
+      };
 
-      let resultado = `
-        <p><b>Seu perfil logístico é: ${perfil}</b></p>
-        <p><b>Conservador:</b> ${porcentagens.A}%<br>
+      let maior = Math.max(contagem.A, contagem.B, contagem.C, contagem.D);
+      // Encontre todos os perfis empatados
+      let perfisEmpatados = Object.keys(contagem).filter(letra => contagem[letra] === maior);
+
+      const nomesPerfis = perfisEmpatados.map(letra => mapPerfis[letra]);
+      const tituloPerfil = nomesPerfis.join(' / ');
+
+      const resultado = `
+        <p><b>${idioma === "es" ? "Tu perfil logístico es" : "Seu perfil logístico é"}: ${tituloPerfil}</b></p>
+        <p><b>Raiz:</b> ${porcentagens.A}%<br>
         <b>Equilibrado / Prático:</b> ${porcentagens.B}%<br>
-        <b>Futurístico:</b> ${porcentagens.C}%</p>
+        <b>Futurístico:</b> ${porcentagens.C}%<br>
+        <b>Intuitivo / Relacional:</b> ${porcentagens.D}%</p>
         <hr>
         <p>
-          <b>Conservador:</b> Valoriza estabilidade, experiência prévia e baixo risco.<br>
-          <b>Perfil Futurístico:</b> Enxerga oportunidades nas mudanças, adota tecnologia proativamente.<br>
-          <b>Perfil Equilibrado / Prático:</b> Busca equilíbrio entre inovação e realidade operacional.
+          <b>Raiz:</b> ${idioma === "es" ? "Valora estabilidad, métodos tradicionales y previsibilidad." : "Valoriza estabilidade, métodos tradicionais e previsibilidade."}<br>
+          <b>Equilibrado / Prático:</b> ${idioma === "es" ? "Busca eficiencia sin perder la visión realista y de costos." : "Busca eficiência sem perder a visão realista e de custos."}<br>
+          <b>Futurístico:</b> ${idioma === "es" ? "Adopta nuevas tecnologías y soluciones innovadoras de forma proactiva." : "Adota novas tecnologias e soluções inovadoras de forma proativa."}<br>
+          <b>Intuitivo / Relacional:</b> ${idioma === "es" ? "Confía en la experiencia práctica, el entorno y el sentido común para resolver." : "Confia na experiência prática, no entorno e no senso comum para resolver."}
         </p>
       `;
 
       document.getElementById("resultado").innerHTML = resultado;
     }
 
-    // Inicializa quiz ao carregar
     renderizarPerguntas();
   </script>
-
 </body>
 </html>
